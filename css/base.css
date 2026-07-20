@@ -1,0 +1,229 @@
+* {
+    font-family: "Share Tech", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    margin: 0;
+}
+
+.content,
+.detail-layout {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.content {
+    padding: 32px 0;
+}
+
+a {
+    color: var(--color-primary);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card{
+    background-color: var(--color-panel);
+    color: var(--color-ink);
+    border: 1px solid rgba(31, 23, 36, 0.12);
+    border-radius: 8px;
+    min-height: 220px;
+    cursor: pointer;
+    display: flex;
+    overflow: hidden;
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.card:hover,
+.card:focus-visible{
+    border-color: var(--color-accent);
+    box-shadow: 0 18px 36px rgba(31, 23, 36, 0.18);
+    outline: none;
+    transform: translateY(-4px);
+}
+
+.card.featured{
+    border-color: var(--color-warm);
+}
+
+.card .container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.card h3,
+.detail-panel h1 {
+    margin: 0;
+}
+
+.card p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.container{
+    padding: 20px;
+}
+
+.titulo {
+    color: var(--color10);
+}
+
+.site-header {
+    background-color: var(--color1);
+    padding: 20px;
+    text-align: center;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.button-header {
+    background-color: var(--color-primary);
+    color: var(--color10);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.page{
+    display: none;
+}
+
+.page.active{
+
+    display: block;
+}
+
+.cards-shell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-page {
+    min-height: calc(100vh - 150px);
+}
+
+.detail-layout {
+    padding: 32px 0;
+}
+
+.detail-back {
+    background-color: var(--color1);
+    color: var(--color10);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+}
+
+.detail-panel {
+    background-color: var(--color-panel);
+    border: 1px solid rgba(31, 23, 36, 0.14);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+    min-height: 460px;
+    overflow: hidden;
+}
+
+.detail-media {
+    align-items: center;
+    background:
+        linear-gradient(135deg, rgba(47, 143, 131, 0.94), rgba(74, 48, 82, 0.96));
+    color: var(--color10);
+    display: flex;
+    font-size: clamp(48px, 9vw, 96px);
+    justify-content: center;
+    min-height: 320px;
+    overflow: hidden;
+}
+
+.detail-media img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.detail-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: clamp(24px, 5vw, 48px);
+}
+
+.detail-kicker {
+    color: var(--color-accent);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.detail-summary {
+    color: var(--color-muted);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.detail-meta {
+    display: grid;
+    gap: 10px;
+}
+
+.detail-meta p,
+.detail-story p {
+    line-height: 1.5;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.detail-actions a {
+    background-color: var(--color-primary);
+    border-radius: 6px;
+    color: var(--color10);
+    padding: 10px 14px;
+    text-decoration: none;
+}
+
+@media (max-width: 720px) {
+    .detail-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-media {
+        min-height: 220px;
+    }
+}

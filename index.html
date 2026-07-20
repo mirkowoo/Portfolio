@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <global-head></global-head>
+</head>
+
+<body>
+    <global-header></global-header>
+    <main>
+
+        <section id="home" class="page active">
+            <div class="content">
+                <h1>Who am I?</h1>
+                <p>I am a software developer with experience in C#, JavaScript, React, and Node.js.</p>
+
+            </div>
+        </section>
+
+        <section id="experience" class="page">
+            <div class="content">
+                <h1>Experience</h1>
+                <p>This is the experience page.</p>
+                <p>Here's my LinkedIn profile: <a href="https://www.linkedin.com/in/mirko-franichevic-ab802b351/" target="_blank">Mirko Franichevic</a></p>
+
+                <div class="cards-shell">
+                    <ul class="experience-list card-grid"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="page">
+            <div class="content">
+                <h1>Games</h1>
+                <p>This is the games page.</p>
+                <p>Here's my Itch.io profile: <a href="https://mirkowoo.itch.io" target="_blank">mirkowoo</a></p>
+                <ul class="games-list card-grid"></ul>
+            </div>
+        </section>
+
+        <section id="projects" class="page">
+            <div class="content">
+                <h1>Projects</h1>
+                <p>This is the projects page.</p>
+                <ul class="projects-list card-grid"></ul>
+            </div>
+        </section>
+
+        <section id="detail" class="page detail-page">
+            <div class="detail-layout">
+                <button class="detail-back" type="button" data-detail-back>Back</button>
+                <article class="detail-panel" aria-live="polite">
+                    <div class="detail-media" data-detail-media></div>
+                    <div class="detail-copy">
+                        <p class="detail-kicker" data-detail-type></p>
+                        <h1 data-detail-title></h1>
+                        <p class="detail-summary" data-detail-summary></p>
+                        <div class="detail-meta" data-detail-meta></div>
+                        <div class="detail-story" data-detail-story></div>
+                        <div class="detail-actions" data-detail-actions></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+    <global-footer></global-footer>
+    <script src="js/config.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/cardDetails.js" defer></script>
+    <script src="js/getExperience.js" defer></script>
+    <script src="js/getGames.js" defer></script>
+    <script src="js/getProjects.js" defer></script>
+    <script src="js/globalComponents.js" defer></script>
+
+</body>
+
+</html>
