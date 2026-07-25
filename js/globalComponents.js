@@ -10,6 +10,7 @@ class GlobalHead extends HTMLElement {
         const links = [
             { rel: "stylesheet", href: `${basePath}css/base.css` },
             { rel: "stylesheet", href: `${basePath}css/colors.css` },
+            { rel: "stylesheet", href: `${basePath}css/blog.css` },
             { rel: "preconnect", href: "https://fonts.googleapis.com" },
             { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
             { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" }
@@ -21,7 +22,7 @@ class GlobalHead extends HTMLElement {
             document.head.appendChild(link);
         });
 
-        document.title = "Document";
+        document.title = "Mirko Franichevic — Devlog y portafolio";
     }
 }
 
@@ -31,13 +32,28 @@ class GlobalHeader extends HTMLElement {
         this.innerHTML = `
             <header class="site-header">
                 <ul class="nav-links">
-                    <li><button class="button-header" id="go-to-home" onclick="buttonClick('home', this)">Go to Home</button></li>
-                    <li><button class="button-header" id="go-to-experience" onclick="buttonClick('experience', this)">Go to Experience</button></li>
-                    <li><button class="button-header" id="go-to-games" onclick="buttonClick('games', this)">Go to Games</button></li>
-                    <li><button class="button-header" id="go-to-projects" onclick="buttonClick('projects', this)">Go to Projects</button></li>
+                    <li><a class="button-header" data-nav="/ /post" href="#/" data-i18n="nav.devlog"></a></li>
+                    <li><a class="button-header" data-nav="/experiencia" href="#/experiencia" data-i18n="nav.experience"></a></li>
+                    <li><a class="button-header" data-nav="/juegos /juego" href="#/juegos" data-i18n="nav.games"></a></li>
+                    <li><a class="button-header" data-nav="/proyectos /proyecto" href="#/proyectos" data-i18n="nav.projects"></a></li>
                 </ul>
+                <div class="site-auth">
+                    <button type="button" class="button-header button-lang" data-lang-toggle></button>
+                    <span data-auth-slot></span>
+                </div>
             </header>
-        `
+        `;
+
+        const toggle = this.querySelector("[data-lang-toggle]");
+        const paint = () => {
+            toggle.textContent = window.I18n.t("lang.toggle");
+            toggle.title = window.I18n.t("lang.toggleTitle");
+        };
+        toggle.addEventListener("click", () => window.I18n.toggle());
+        window.I18n.onChange(paint);
+        paint();
+
+        window.I18n.apply();
     }
 }
 
@@ -63,34 +79,6 @@ class GlobalScript extends HTMLElement {
     }
 }
 
-
-//Navigation button click
-function buttonClick(id, button) {
-    activatePage(id, button);
-    clearButtonStyles(id);
-}
-//Function to navigate to a specific section
-function activatePage(id, button) {
-  window.showPage(id);
-
-  if (button) {
-    button.setAttribute("style", "background-color: var(--color5); color: var(--color10);");
-  }
-}
-//Clear button styles except the clicked one
-function clearButtonStyles(id) {
-  document.querySelectorAll(".button-header").forEach(button => {
-    if (button.id !== `go-to-${id}`) {
-      button.setAttribute("style", "background-color: var(--color1); color: var(--color10);");
-    }
-  });
-}
-
-function goTo(id) {
-  const isInPagesFolder = window.location.pathname.includes("/pages/");
-  const basePath = isInPagesFolder ? "" : "pages/";
-  window.location.href = `${basePath}${id}.html`;
-}
 
 customElements.define('global-header', GlobalHeader);
 customElements.define('global-footer', GlobalFooter);

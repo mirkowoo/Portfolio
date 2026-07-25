@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <global-head></global-head>
 </head>
 
@@ -9,19 +11,27 @@
     <global-header></global-header>
     <main>
 
+        <!-- Portada = feed central del blog -->
         <section id="home" class="page active">
             <div class="content">
-                <h1>Who am I?</h1>
-                <p>I am a software developer with experience in C#, JavaScript, React, and Node.js.</p>
+                <header class="feed-intro">
+                    <h1>Devlog</h1>
+                    <p>Soy Mirko, desarrollador de software. Acá voy publicando lo que construyo:
+                       features nuevas, cosas que rompí y arreglé, y decisiones de diseño de mis
+                       juegos y proyectos.</p>
+                </header>
 
+                <div class="feed-filters" data-feed-filters></div>
+                <ul class="post-feed" data-feed></ul>
             </div>
         </section>
 
         <section id="experience" class="page">
             <div class="content">
-                <h1>Experience</h1>
-                <p>This is the experience page.</p>
-                <p>Here's my LinkedIn profile: <a href="https://www.linkedin.com/in/mirko-franichevic-ab802b351/" target="_blank">Mirko Franichevic</a></p>
+                <h1 data-i18n="list.experienceTitle"></h1>
+                <p><span data-i18n="list.experienceIntro"></span>
+                   <a href="https://www.linkedin.com/in/mirko-franichevic-ab802b351/" target="_blank" rel="noopener noreferrer">Mirko Franichevic</a>
+                </p>
 
                 <div class="cards-shell">
                     <ul class="experience-list card-grid"></ul>
@@ -31,24 +41,35 @@
 
         <section id="games" class="page">
             <div class="content">
-                <h1>Games</h1>
-                <p>This is the games page.</p>
-                <p>Here's my Itch.io profile: <a href="https://mirkowoo.itch.io" target="_blank">mirkowoo</a></p>
+                <h1 data-i18n="list.gamesTitle"></h1>
+                <p><span data-i18n="list.gamesIntro"></span>
+                   <a href="https://mirkowoo.itch.io" target="_blank" rel="noopener noreferrer">mirkowoo</a>
+                </p>
                 <ul class="games-list card-grid"></ul>
             </div>
         </section>
 
         <section id="projects" class="page">
             <div class="content">
-                <h1>Projects</h1>
-                <p>This is the projects page.</p>
+                <h1 data-i18n="list.projectsTitle"></h1>
                 <ul class="projects-list card-grid"></ul>
             </div>
         </section>
 
+        <!-- Blog dedicado de un juego o proyecto -->
+        <section id="projectblog" class="page">
+            <div class="content" data-project-blog></div>
+        </section>
+
+        <!-- Post individual -->
+        <section id="post" class="page">
+            <div class="content" data-post-view></div>
+        </section>
+
+        <!-- Detalle de tarjeta (se mantiene para Experiencia) -->
         <section id="detail" class="page detail-page">
             <div class="detail-layout">
-                <button class="detail-back" type="button" data-detail-back>Back</button>
+                <button class="detail-back" type="button" data-detail-back data-i18n="project.back"></button>
                 <article class="detail-panel" aria-live="polite">
                     <div class="detail-media" data-detail-media></div>
                     <div class="detail-copy">
@@ -65,9 +86,18 @@
 
     </main>
     <global-footer></global-footer>
+
     <script src="js/config.js" defer></script>
+    <script src="js/i18n.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/markdown.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/authUI.js" defer></script>
+    <script src="js/router.js" defer></script>
     <script src="js/cardDetails.js" defer></script>
+    <script src="js/interactions.js" defer></script>
+    <script src="js/blog.js" defer></script>
     <script src="js/getExperience.js" defer></script>
     <script src="js/getGames.js" defer></script>
     <script src="js/getProjects.js" defer></script>

@@ -1,67 +1,48 @@
 async function fetchProjects() {
-    const body = {
-        "refs": { "Proyectos": "d8d01d42-5f77-44a3-920d-3e2011335442"},
-        "query": {
-            "from": "Proyectos",
-            "select": ["Titulo", "Descripcion", "Tecnologias", "Organizacion", "LinkRepo", "Destacado"],
-            "limit": 25
-        }
-    };
-
-    const response = await fetch(PRAXSUITE_API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${PRAXSUITE_PUBLIC_KEY}`,
-        },
-        body: JSON.stringify(body)
-    });
-
-    if (!response.ok) throw new Error(`HTTP ${response.status} - ${response.statusText}`);
-    const result = await response.json();
-    console.log("Praxsuite response:", result);
-    renderProjects(result);
+    try {
+        const proyectos = await window.Blog.loadProyectos();
+        renderProjects(proyectos);
+    } catch (error) {
+        console.error("No se pudieron cargar los proyectos", error);
+        const list = document.querySelector(".projects-list");
+        if (list) list.innerHTML = `<li>${window.I18n.t("list.loadError")}</li>`;
+    }
 }
 
-function renderProjects(result) {
+function renderProjects(proyectos) {
     const list = document.querySelector(".projects-list");
     if (!list) return;
     list.innerHTML = "";
-    const rows = result?.data ?? [];
-    if (rows.length === 0) {
-        list.innerHTML = "<li>No hay datos disponibles.</li>";
+
+    if (!proyectos.length) {
+        list.innerHTML = `<li>${window.I18n.t("list.empty")}</li>`;
         return;
     }
-    rows.forEach((item, index) => {
-        const li = document.createElement("li");
-        li.classList.add("card");
-        const div = document.createElement("div");
-        div.classList.add("container");
-        window.addCardHeading(div, item.Titulo);
-        window.addCardField(div, "Descripcion", item.Descripcion);
-        window.addCardField(div, "Tecnologias", item.Tecnologias);
-        window.addCardField(div, "Organizacion", item.Organizacion);
-        window.addCardLinkField(div, "LinkRepo", item.LinkRepo);
-        if (item.Destacado) {
-            li.classList.add("featured");
-        }
-        window.makeCardInteractive(li, {
-            type: "Proyecto",
-            title: item.Titulo,
-            summary: item.Descripcion,
-            story: item.Historia,
-            repoUrl: item.LinkRepo,
-            demoUrl: item.LinkDemo,
-            image: item.Imagen,
-            meta: [
-                { label: "Tecnologias", value: item.Tecnologias },
-                { label: "Organizacion", value: item.Organizacion },
-                { label: "Destacado", value: item.Destacado ? "Si" : "" }
-            ]
+
+    proyectos
+        .slice()
+        .sort((a, b) => (a.Orden ?? 99) - (b.Orden ?? 99))
+        .forEach(item => {
+            const li = document.createElement("li");
+            li.classList.add("card");
+            if (item.Destacado) li.classList.add("featured");
+
+            const div = document.createElement("div");
+            div.classList.add("container");
+
+            const L = window.I18n.localized;
+            window.addCardHeading(div, L(item, "Titulo"));
+            window.addCardField(div, window.I18n.t("field.Descripcion"), L(item, "Descripcion"));
+            window.addCardField(div, window.I18n.t("field.Tecnologias"), item.Tecnologias);
+            window.addCardField(div, window.I18n.t("field.Organizacion"), L(item, "Organizacion"));
+
+            // Al hacer clic se abre el blog dedicado del proyecto, no un modal.
+            window.makeCardNavigable(li, `/proyecto/${item.slug}`, L(item, "Titulo"));
+
+            li.appendChild(div);
+            list.appendChild(li);
         });
-        li.appendChild(div);
-        list.appendChild(li);
-    });
 }
 
-fetchProjects();
+window.addEventListener("DOMContentLoaded", fetchProjects);
+window.I18n.onChange(fetchProjects);

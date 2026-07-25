@@ -143,6 +143,27 @@
         });
     }
 
+    // Para juegos y proyectos: la tarjeta navega a su blog dedicado en vez de
+    // abrir el panel de detalle.
+    function makeCardNavigable(card, path, title) {
+        card.tabIndex = 0;
+        card.setAttribute("role", "link");
+        card.setAttribute("aria-label", `Abrir el devlog de ${valueOrFallback(title, "este proyecto")}`);
+
+        const go = () => window.Router.navigate(path);
+
+        card.addEventListener("click", event => {
+            if (event.target.closest("a")) return;
+            go();
+        });
+
+        card.addEventListener("keydown", event => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            go();
+        });
+    }
+
     function initDetailBackButton() {
         const backButton = document.querySelector("[data-detail-back]");
         if (!backButton) return;
@@ -155,6 +176,7 @@
 
     window.openCardDetail = openCardDetail;
     window.makeCardInteractive = makeCardInteractive;
+    window.makeCardNavigable = makeCardNavigable;
     window.addCardHeading = addCardHeading;
     window.addCardField = addCardField;
     window.addCardLinkField = addCardLinkField;
