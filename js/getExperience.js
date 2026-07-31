@@ -2,7 +2,7 @@ async function fetchExperiencia() {
     try {
         const rows = await window.Api.query("Experiencia", window.Api.tables.Experiencia, {
             select: ["Cargo", "CargoEN", "Empresa", "Periodo", "PeriodoEN",
-                     "Descripcion", "DescripcionEN"],
+                     "Descripcion", "DescripcionEN", "Imagen"],
             limit: 25
         });
         renderExperiencia(rows);

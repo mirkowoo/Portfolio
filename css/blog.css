@@ -671,3 +671,251 @@ a.button-header {
     .site-header { justify-content: center; }
     .nav-links { justify-content: center; }
 }
+
+/* ------------------------------------------------------------ modo owner */
+/* Los controles solo se pintan si Admin.isOwner(); el permiso real lo valida
+   la automation. Ver la nota de seguridad al inicio de js/admin.js. */
+.admin-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.admin-inline {
+    border-top: 1px dashed rgba(31, 23, 36, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 10px;
+}
+
+.admin-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-4);
+    border-radius: 6px;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 5px 12px;
+}
+
+.admin-btn:hover {
+    background-color: rgba(78, 24, 124, 0.08);
+}
+
+.admin-btn.admin-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color10);
+}
+
+.admin-btn.admin-danger {
+    border-color: #b91c1c;
+    color: #b91c1c;
+}
+
+.admin-tag {
+    background-color: var(--color-warm);
+    border-radius: 4px;
+    color: var(--color-ink);
+    font-size: 12px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+}
+
+.admin-dialog {
+    background-color: var(--color-panel);
+    border: 1px solid rgba(31, 23, 36, 0.2);
+    border-radius: 10px;
+    color: var(--color-ink);
+    max-height: 90vh;
+    max-width: 760px;
+    padding: 0;
+    width: calc(100% - 32px);
+}
+
+.admin-dialog::backdrop {
+    background-color: rgba(31, 23, 36, 0.6);
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.admin-form-head {
+    align-items: center;
+    border-bottom: 1px solid rgba(31, 23, 36, 0.15);
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px;
+}
+
+.admin-form-head h2 { margin: 0; }
+
+.admin-close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: 26px;
+    line-height: 1;
+}
+
+/* Scroll unico en el cuerpo: la cabecera y las acciones quedan fijas. */
+.admin-fields {
+    display: grid;
+    gap: 14px;
+    overflow-y: auto;
+    padding: 18px 20px;
+}
+
+.admin-field {
+    display: grid;
+    gap: 5px;
+}
+
+.admin-field > span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-field small {
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.admin-field input[type="text"],
+.admin-field input[type="number"],
+.admin-field input[type="datetime-local"],
+.admin-field select,
+.admin-field textarea {
+    border: 1px solid rgba(31, 23, 36, 0.25);
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+.admin-field textarea { resize: vertical; }
+
+.admin-field textarea.admin-md {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 14px;
+}
+
+.admin-field-bool {
+    align-items: center;
+    grid-auto-flow: column;
+    justify-content: start;
+}
+
+.admin-field-bool input { width: auto; }
+
+.admin-actions {
+    align-items: center;
+    border-top: 1px solid rgba(31, 23, 36, 0.15);
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+}
+
+.admin-spacer { flex: 1; }
+
+.admin-actions button {
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 9px 16px;
+}
+
+.admin-cancel { background-color: transparent; color: var(--color-muted); }
+.admin-save { background-color: var(--color-primary); color: var(--color10); }
+.admin-delete { background-color: transparent; border: 1px solid #b91c1c !important; color: #b91c1c; }
+
+/* ------------------------------------------------------------------- media */
+/* Las columnas File no se pueden poner en un <img src> (la URL exige cabecera
+   Authorization), asi que Api.hydrateImages descarga el blob y rellena el src.
+   Mientras no hay imagen — o si la descarga falla — .is-empty pinta las
+   iniciales sobre un degradado para que la grilla no quede desigual. */
+.media {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(47, 143, 131, 0.94), rgba(74, 48, 82, 0.96));
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.media img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.media.is-empty::after {
+    color: var(--color10);
+    content: attr(data-initials);
+    font-size: clamp(28px, 5vw, 52px);
+    letter-spacing: 0.04em;
+}
+
+/* Miniatura de tarjeta: la tarjeta es flex, asi que la imagen va arriba y el
+   contenido debajo. */
+.card {
+    flex-direction: column;
+}
+
+.card-media {
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+/* Imagen destacada del blog de proyecto */
+.project-media {
+    aspect-ratio: 21 / 9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Portada del post: se pega al panel de la cabecera */
+.post-media {
+    aspect-ratio: 21 / 9;
+    border-left: 1px solid rgba(31, 23, 36, 0.12);
+    border-right: 1px solid rgba(31, 23, 36, 0.12);
+    width: 100%;
+}
+
+.detail-media-inner {
+    height: 100%;
+    min-height: 320px;
+    width: 100%;
+}
+
+/* Galeria: tira que se adapta, con scroll horizontal si no cabe */
+.galeria {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.galeria-item {
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    cursor: zoom-in;
+    transition: transform 160ms ease;
+}
+
+.galeria-item:hover {
+    transform: scale(1.03);
+}
+
+@media (max-width: 640px) {
+    .galeria { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}

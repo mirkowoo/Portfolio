@@ -13,7 +13,7 @@
     const POST_FIELDS = [
         "ID", "Titulo", "TituloEN", "Slug", "Resumen", "ResumenEN",
         "Contenido", "ContenidoEN", "Fecha", "Tipo", "Version", "Etiquetas",
-        "Publicado", "Destacado", "Juego", "Proyecto"
+        "Publicado", "Destacado", "Juego", "Proyecto", "Portada"
     ];
 
     async function loadPosts() {
@@ -21,7 +21,8 @@
 
         const rows = await api().query("Posts", api().tables.Posts, {
             select: POST_FIELDS,
-            where: [{ field: "Publicado", op: "eq", value: true }],
+            // El owner necesita ver los borradores para poder editarlos.
+            where: window.Admin?.isOwner() ? [] : [{ field: "Publicado", op: "eq", value: true }],
             orderBy: [{ field: "Fecha", dir: "desc" }],
             limit: 100
         });
@@ -45,7 +46,7 @@
         const rows = await api().query("ProyectosJuegos", api().tables.ProyectosJuegos, {
             select: ["ID", "Titulo", "TituloEN", "DescripcionES", "DescripcionEN", "Engine",
                      "LinkJugar", "LinkRepo", "Historia", "HistoriaEN", "Retos", "RetosEN",
-                     "Aprendizajes", "AprendizajesEN", "Orden"],
+                     "Aprendizajes", "AprendizajesEN", "Orden", "Imagen", "Galeria"],
             limit: 50
         });
         cache.juegos = rows
@@ -60,7 +61,7 @@
             select: ["ID", "Titulo", "TituloEN", "Descripcion", "DescripcionEN", "Tecnologias",
                      "Organizacion", "OrganizacionEN", "LinkRepo", "LinkDemo", "Destacado",
                      "Historia", "HistoriaEN", "Retos", "RetosEN",
-                     "Aprendizajes", "AprendizajesEN", "Orden"],
+                     "Aprendizajes", "AprendizajesEN", "Orden", "Imagen", "Galeria"],
             limit: 50
         });
         cache.proyectos = rows
@@ -124,7 +125,11 @@
             list.appendChild(empty);
             return;
         }
-        posts.forEach(post => list.appendChild(buildPostCard(post)));
+        posts.forEach(post => {
+            const card = buildPostCard(post);
+            window.Admin?.mountPostControls(card, post);
+            list.appendChild(card);
+        });
     }
 
     // ---------------------------------------------------------------- HOME
@@ -165,6 +170,7 @@
         }
 
         const active = filters?.querySelector(".feed-filter.is-active")?.dataset.tipo || "";
+        window.Admin?.mountFeedControls(document.querySelector("#home .content"));
         renderFeed(list, active ? posts.filter(p => p.tipo === active) : posts, t("feed.empty"));
     }
 
@@ -197,6 +203,7 @@
             [t("project.repo"), subject.LinkRepo]
         ].filter(([, url]) => url);
 
+        const galeria = api().fileEntries(subject.Galeria);
         const sections = ["Historia", "Retos", "Aprendizajes"]
             .map(key => ({ key, value: L(subject, key) }))
             .filter(section => section.value);
@@ -204,6 +211,7 @@
         root.innerHTML = `
             <header class="project-hero">
                 <a class="project-back" href="#/${kind === "juego" ? "juegos" : "proyectos"}">${esc(t("project.back"))}</a>
+                ${window.mediaHtml(subject.Imagen, L(subject, "Titulo"), "project-media")}
                 <p class="project-kicker">${esc(kind === "juego" ? t("project.game") : t("project.project"))}</p>
                 <h1>${esc(L(subject, "Titulo"))}</h1>
                 <p class="project-summary">${esc(descripcion)}</p>
@@ -226,11 +234,25 @@
                 `).join("")}
             </div>
 
+            ${galeria.length ? `
+            <section class="project-section">
+                <h2>${esc(t("project.gallery"))}</h2>
+                <div class="galeria">
+                    ${galeria.map(entry =>
+                        window.mediaHtml([entry], entry.Name || "", "galeria-item")).join("")}
+                </div>
+            </section>` : ""}
+
             <section class="project-devlog">
                 <h2>${esc(t("project.devlog"))}</h2>
                 <ul class="post-feed" data-project-feed></ul>
             </section>
         `;
+
+        window.Api.hydrateImages(root);
+
+        window.Admin?.mountEntityControls(root,
+            kind === "juego" ? "ProyectosJuegos" : "Proyectos", subject);
 
         const posts = await loadPosts();
         const own = posts.filter(post =>
@@ -276,6 +298,10 @@
                     ${resumen ? `<p class="post-lead">${esc(resumen)}</p>` : ""}
                 </header>
 
+                ${api().firstFileId(post.Portada)
+                    ? window.mediaHtml(post.Portada, L(post, "Titulo"), "post-media")
+                    : ""}
+
                 <div class="md post-body">${window.Markdown.render(L(post, "Contenido"))}</div>
 
                 <div data-reactions></div>
@@ -283,6 +309,7 @@
             </article>
         `;
 
+        window.Api.hydrateImages(root);
         window.Interactions?.mount(root, post);
     }
 
@@ -290,7 +317,8 @@
     window.Blog = {
         loadJuegos,
         loadProyectos,
-        invalidatePosts: () => { cache.posts = null; }
+        invalidatePosts: () => { cache.posts = null; },
+        invalidateAll: () => { cache.posts = null; cache.juegos = null; cache.proyectos = null; }
     };
 
     window.Router.on("/", showHome);

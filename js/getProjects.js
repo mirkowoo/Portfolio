@@ -27,6 +27,9 @@ function renderProjects(proyectos) {
             li.classList.add("card");
             if (item.Destacado) li.classList.add("featured");
 
+            li.insertAdjacentHTML("afterbegin",
+                window.mediaHtml(item.Imagen, window.I18n.localized(item, "Titulo"), "card-media"));
+
             const div = document.createElement("div");
             div.classList.add("container");
 
@@ -42,6 +45,8 @@ function renderProjects(proyectos) {
             li.appendChild(div);
             list.appendChild(li);
         });
+
+    window.Api.hydrateImages(list);
 }
 
 window.addEventListener("DOMContentLoaded", fetchProjects);

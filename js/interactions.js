@@ -160,6 +160,12 @@
             </section>
         `;
 
+        // Controles de moderacion, uno por comentario (solo si eres owner).
+        [...container.querySelectorAll(".comentario")].forEach((li, i) => {
+            window.Admin?.mountCommentControls(li, rows[i],
+                () => renderComentarios(container, post));
+        });
+
         container.querySelector("[data-open-login]")
             ?.addEventListener("click", () => window.AuthUI.open("login"));
 

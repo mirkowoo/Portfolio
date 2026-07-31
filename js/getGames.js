@@ -28,6 +28,9 @@ function renderGames(juegos) {
             const li = document.createElement("li");
             li.classList.add("card");
 
+            li.insertAdjacentHTML("afterbegin",
+                window.mediaHtml(item.Imagen, window.I18n.localized(item, "Titulo"), "card-media"));
+
             const div = document.createElement("div");
             div.classList.add("container");
 
@@ -41,6 +44,8 @@ function renderGames(juegos) {
             li.appendChild(div);
             list.appendChild(li);
         });
+
+    window.Api.hydrateImages(list);
 }
 
 window.addEventListener("DOMContentLoaded", fetchGames);

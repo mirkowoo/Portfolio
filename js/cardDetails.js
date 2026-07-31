@@ -65,29 +65,13 @@
         parent.appendChild(paragraph);
     }
 
+    // detail.image llega como valor de columna File, no como URL.
     function renderMedia(detail) {
         const media = document.querySelector("[data-detail-media]");
         if (!media) return;
 
-        media.innerHTML = "";
-        const imageUrl = valueOrFallback(detail.image);
-
-        if (imageUrl) {
-            const image = document.createElement("img");
-            image.src = imageUrl;
-            image.alt = valueOrFallback(detail.title, "Portfolio detail");
-            media.appendChild(image);
-            return;
-        }
-
-        const initials = valueOrFallback(detail.title, "MW")
-            .split(/\s+/)
-            .slice(0, 2)
-            .map(word => word.charAt(0))
-            .join("")
-            .toUpperCase();
-
-        media.textContent = initials || "MW";
+        media.innerHTML = mediaHtml(detail.image, detail.title, "detail-media-inner");
+        window.Api.hydrateImages(media);
     }
 
     function openCardDetail(detail) {
@@ -143,6 +127,27 @@
         });
     }
 
+    function initials(title) {
+        return valueOrFallback(title, "MW")
+            .split(/\s+/)
+            .slice(0, 2)
+            .map(word => word.charAt(0))
+            .join("")
+            .toUpperCase() || "MW";
+    }
+
+    // Bloque de imagen reutilizable. Devuelve HTML: si no hay archivo (o si la
+    // descarga falla), el CSS pinta las iniciales sobre un degradado para que la
+    // grilla no quede desigual entre items con y sin imagen.
+    function mediaHtml(fileValue, title, extraClass = "") {
+        const fileId = window.Api.firstFileId(fileValue);
+        const ini = initials(title);
+        const clases = `media ${extraClass}${fileId ? "" : " is-empty"}`.trim();
+        return `<div class="${clases}" data-initials="${ini}">${
+            fileId ? `<img data-file="${fileId}" alt="${valueOrFallback(title, "")}" loading="lazy">` : ""
+        }</div>`;
+    }
+
     // Para juegos y proyectos: la tarjeta navega a su blog dedicado en vez de
     // abrir el panel de detalle.
     function makeCardNavigable(card, path, title) {
@@ -177,6 +182,7 @@
     window.openCardDetail = openCardDetail;
     window.makeCardInteractive = makeCardInteractive;
     window.makeCardNavigable = makeCardNavigable;
+    window.mediaHtml = mediaHtml;
     window.addCardHeading = addCardHeading;
     window.addCardField = addCardField;
     window.addCardLinkField = addCardLinkField;

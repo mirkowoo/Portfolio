@@ -37,6 +37,18 @@
             "auth.expired": "Your session expired.",
             "auth.signInAgain": "Sign in again",
 
+            "admin.newPost": "New post",
+            "admin.edit": "Edit",
+            "admin.delete": "Delete",
+            "admin.hide": "Hide",
+            "admin.save": "Save",
+            "admin.cancel": "Cancel",
+            "admin.draft": "Draft",
+            "admin.newOf": "New {entidad}",
+            "admin.editOf": "Edit {entidad}",
+            "admin.saveFailed": "Could not save the changes.",
+            "admin.confirmDelete": "Delete permanently? This cannot be undone.",
+
             "feed.title": "Devlog",
             "feed.intro": "I'm Mirko, a software developer. This is where I post what I'm building: new features, things I broke and fixed, and design decisions behind my games and projects.",
             "feed.all": "All",
@@ -60,6 +72,7 @@
             "project.play": "Play",
             "project.demo": "Demo",
             "project.repo": "Repository",
+            "project.gallery": "Gallery",
 
             "field.Historia": "Story",
             "field.Retos": "Challenges",
@@ -130,6 +143,18 @@
             "auth.expired": "Tu sesión expiró.",
             "auth.signInAgain": "Volver a entrar",
 
+            "admin.newPost": "Nueva entrada",
+            "admin.edit": "Editar",
+            "admin.delete": "Borrar",
+            "admin.hide": "Ocultar",
+            "admin.save": "Guardar",
+            "admin.cancel": "Cancelar",
+            "admin.draft": "Borrador",
+            "admin.newOf": "Nuevo: {entidad}",
+            "admin.editOf": "Editar {entidad}",
+            "admin.saveFailed": "No se pudieron guardar los cambios.",
+            "admin.confirmDelete": "¿Borrar definitivamente? No se puede deshacer.",
+
             "feed.title": "Devlog",
             "feed.intro": "Soy Mirko, desarrollador de software. Acá voy publicando lo que construyo: features nuevas, cosas que rompí y arreglé, y decisiones de diseño de mis juegos y proyectos.",
             "feed.all": "Todo",
@@ -153,6 +178,7 @@
             "project.play": "Jugar",
             "project.demo": "Demo",
             "project.repo": "Repositorio",
+            "project.gallery": "Galería",
 
             "field.Historia": "Historia",
             "field.Retos": "Retos",

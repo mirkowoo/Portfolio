@@ -1,9 +1,15 @@
 window.AppConfig = {
     PRAXSUITE_API_URL: "https://gateway.praxsuite.com/e0efff61-b451-46de-8dcf-e2fa8634d20a/query",
     PRAXSUITE_AUTH_URL: "https://gateway.praxsuite.com/e0efff61-b451-46de-8dcf-e2fa8634d20a/auth",
+    // Endpoint de gestion (owner). La automation detras exige el rol owner
+    // verificado desde el JWT; sin ese rol no escribe nada.
+    PRAXSUITE_ADMIN_URL: "https://gateway.praxsuite.com/e0efff61-b451-46de-8dcf-e2fa8634d20a/endpoint/1a04e157-98ec-4646-b61b-084a969a6f93",
     // Endpoint sync para comentarios y reacciones. No lleva credencial: la
     // automation detras valida el JWT del usuario y escribe con esa identidad.
     PRAXSUITE_INTERACT_URL: "https://gateway.praxsuite.com/e0efff61-b451-46de-8dcf-e2fa8634d20a/endpoint/79f1b56a-4e90-4375-8037-4f1d7b0f038c",
+    // Base de descarga de las columnas File. Ojo: exige cabecera Authorization,
+    // asi que no sirve directo en un <img src>; ver Api.fileUrl.
+    PRAXSUITE_FILES_URL: "https://gateway.praxsuite.com/api/v1/gateway/e0efff61-b451-46de-8dcf-e2fa8634d20a/files",
     PRAXSUITE_PUBLIC_KEY: "pk_live_22afd9439fb581330ae0da96079bf872e42b0264cbab694b633567b7e715ab24",
     TABLES: {
         Experiencia: "1984f121-6ad1-4ea2-9229-1e0ac55f88a4",
