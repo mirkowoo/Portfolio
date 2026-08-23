@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <global-head></global-head>
+    <!-- Se enlaza aca y no desde globalComponents.js: ese archivo ya existe en el
+         CDN y la cache inmutable no propaga cambios. index.html si se revalida.
+         Ver NOTAS-ARCHIVOS-Y-CDN.md, Hallazgo 2. -->
+    <link rel="stylesheet" href="css/logros.v1.css">
 </head>
 
 <body>
@@ -84,6 +88,11 @@
             </div>
         </section>
 
+        <!-- Perfil y logros del workspace -->
+        <section id="perfil" class="page">
+            <div class="content"></div>
+        </section>
+
     </main>
     <global-footer></global-footer>
 
@@ -104,6 +113,7 @@
     <script src="js/getGames.js" defer></script>
     <script src="js/getProjects.js" defer></script>
     <script src="js/globalComponents.js" defer></script>
+    <script src="js/logros.v1.js" defer></script>
 
 </body>
 
