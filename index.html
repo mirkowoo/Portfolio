@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <global-head></global-head>
-    <!-- Se enlaza aca y no desde globalComponents.js: ese archivo ya existe en el
-         CDN y la cache inmutable no propaga cambios. index.html si se revalida.
-         Ver NOTAS-ARCHIVOS-Y-CDN.md, Hallazgo 2. -->
-    <link rel="stylesheet" href="css/perfil.v2.css">
+    <!-- La piel completa la carga js/shell.v1.js (css/terminal.v1.css). Los
+         archivos anteriores — globalComponents.js, base.css, colors.css,
+         blog.css y perfil.v2.css — ya no se cargan: existen en el CDN con cache
+         inmutable y sus cambios nunca llegarian al visitante. Ver
+         NOTAS-ARCHIVOS-Y-CDN.md, Hallazgo 2. index.html si se revalida, por eso
+         el cambio de referencias va aca. -->
 </head>
 
 <body>
@@ -18,6 +20,10 @@
         <!-- Portada = feed central del blog -->
         <section id="home" class="page active">
             <div class="content">
+                <!-- Banda del hub: la pinta js/hub.v1.js con las filas de
+                     Juegos y Proyectos marcadas con la columna Hub. -->
+                <section class="hub" data-hub hidden></section>
+
                 <header class="feed-intro">
                     <h1>Devlog</h1>
                     <p>Soy Mirko, desarrollador de software. Acá voy publicando lo que construyo:
@@ -93,6 +99,11 @@
             <div class="content"></div>
         </section>
 
+        <!-- Manejo de datos: la pinta js/datos.v1.js -->
+        <section id="datos" class="page">
+            <div class="content"></div>
+        </section>
+
     </main>
     <global-footer></global-footer>
 
@@ -106,14 +117,21 @@
     <script src="js/router.js" defer></script>
     <script src="js/cardDetails.js" defer></script>
     <script src="js/adminSchemas.js" defer></script>
+    <script src="js/adminSchemas.hub.v1.js" defer></script>
     <script src="js/admin.js" defer></script>
     <script src="js/interactions.js" defer></script>
     <script src="js/blog.js" defer></script>
     <script src="js/getExperience.js" defer></script>
     <script src="js/getGames.js" defer></script>
     <script src="js/getProjects.js" defer></script>
-    <script src="js/globalComponents.js" defer></script>
-    <script src="js/perfil.v2.js" defer></script>
+    <script src="js/shell.v1.js" defer></script>
+    <script src="js/hub.v1.js" defer></script>
+    <!-- perfil.v3.js reemplaza a perfil.v2.js y absorbe a sesionUI.v1.js:
+         los logros ya no se leen de la tabla (un JWT de usuario final no tiene
+         acceso a tablas) sino de la respuesta del endpoint. Ver la cabecera del
+         archivo. -->
+    <script src="js/perfil.v3.js" defer></script>
+    <script src="js/datos.v1.js" defer></script>
 
 </body>
 
