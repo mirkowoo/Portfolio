@@ -1,0 +1,13 @@
+/* =============================================================================
+   "Ultima vez actualizado" — v1. La inyecta js/actualizado.v1.js.
+   Archivo nuevo por el Hallazgo 2 de NOTAS-ARCHIVOS-Y-CDN.md.
+   ============================================================================= */
+
+.project-updated {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: .05em;
+    color: var(--tenue);
+}
+
+.project-updated time { color: var(--cian); }
