@@ -1,0 +1,191 @@
+/* =============================================================================
+   Galeria y visor — v1. La inyecta js/galeria.v1.js despues de terminal.v1.css.
+   Archivo nuevo por el Hallazgo 2 de NOTAS-ARCHIVOS-Y-CDN.md.
+   ============================================================================= */
+
+/* ------------------------------------------------------ galeria en la pagina */
+
+.galeria-item { outline: none; }
+
+.galeria-item:focus-visible {
+    border-color: var(--cian);
+    box-shadow: 0 0 0 1px var(--cian);
+}
+
+/* Archivos que no son imagen (PDF, video, audio, otros). */
+.galeria-ficha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background:
+        radial-gradient(120px 90px at 50% 40%, #17202a 0%, #090b0f 78%);
+    text-align: center;
+}
+
+.galeria-ficha-ext {
+    border: 1px solid var(--linea-viva);
+    padding: 6px 10px;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ambar);
+}
+
+.galeria-ficha-nombre {
+    max-width: 100%;
+    font-size: 10px;
+    color: var(--tenue);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------- visor */
+
+html.visor-abierto { overflow: hidden; }
+
+.visor {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(3, 4, 6, .94);
+    color: var(--tinta);
+    font-family: var(--mono);
+}
+
+.visor[open] { display: grid; grid-template-rows: auto 1fr; }
+
+.visor::backdrop { background: rgba(3, 4, 6, .82); }
+
+.visor-barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px var(--margen);
+    border-bottom: 1px solid var(--linea);
+    background: var(--fondo-alto);
+    font-size: 11px;
+    min-width: 0;
+}
+
+.visor-contador { color: var(--alarma); letter-spacing: .12em; white-space: nowrap; }
+
+.visor-nombre {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--tinta-alta);
+}
+
+.visor-accion {
+    border: 1px solid var(--linea-viva);
+    padding: 7px 10px;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--tinta);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.visor-accion:hover { border-color: var(--cian); color: var(--cian); }
+.visor-accion[hidden] { display: none; }
+
+.visor-cerrar,
+.visor-nav {
+    background: var(--fondo-alto);
+    border: 1px solid var(--linea-viva);
+    color: var(--tinta-alta);
+    cursor: pointer;
+    font: inherit;
+    line-height: 1;
+}
+
+.visor-cerrar { width: 34px; height: 34px; font-size: 22px; flex: none; }
+
+.visor-cerrar:hover,
+.visor-nav:hover { border-color: var(--cian); color: var(--cian); }
+
+.visor-escena {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.visor-medio {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--linea);
+    background: var(--panel);
+}
+
+.visor-doc {
+    width: min(1000px, 100%);
+    height: 100%;
+    border: 1px solid var(--linea);
+    background: #fff;
+}
+
+.visor-archivo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 28px;
+    border: 1px solid var(--linea-viva);
+    background: var(--fondo-alto);
+    max-width: 100%;
+}
+
+.visor-archivo-ext {
+    border: 1px solid var(--linea-viva);
+    padding: 10px 16px;
+    font-size: 20px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ambar);
+}
+
+.visor-archivo-nombre { color: var(--tinta-alta); overflow-wrap: anywhere; text-align: center; }
+
+.visor-aviso { margin: 0; color: var(--tenue); font-size: 12px; }
+
+.visor-nav {
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 64px;
+    font-size: 30px;
+    transform: translateY(-50%);
+    opacity: .85;
+}
+
+.visor-nav[hidden] { display: none; }
+.visor-anterior { left: 8px; }
+.visor-siguiente { right: 8px; }
+
+/* En telefono los botones de texto ocupan demasiado: queda solo descargar. */
+@media (max-width: 719px) {
+    .visor-barra [data-visor-pestana] { display: none; }
+    .visor-nav { width: 36px; height: 52px; font-size: 24px; background: rgba(10, 13, 18, .7); }
+}
+
+@media (min-width: 720px) {
+    .visor-escena { padding: 24px 64px; }
+    .visor-anterior { left: 14px; }
+    .visor-siguiente { right: 14px; }
+}
